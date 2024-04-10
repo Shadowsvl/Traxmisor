@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Labels -->
+    <string name="app_name" translatable="false">Traxmisor</string>
+
+    <!-- Hints -->
+    <string name="hint_email">Correo electrónico</string>
+    <string name="hint_password">Contraseña</string>
+
+    <!-- Buttons -->
+    <string name="btn_log_in">Iniciar sesión</string>
+
     <!-- Notify Errors -->
     <string name="notify_not_connected">⚠️ Sin conexión a internet</string>
 </resources>

@@ -1,6 +1,8 @@
 package com.arch.design_system.icon
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.ArrowForward
@@ -23,4 +25,6 @@ object AppIcons {
     val Search = Icons.Rounded.Search
     val Settings = Icons.Rounded.Settings
     val Warning = Icons.Rounded.Warning
+    val Visibility = Icons.Filled.Visibility
+    val VisibilityOff = Icons.Filled.VisibilityOff
 }

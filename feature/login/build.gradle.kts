@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.traxion.home"
+    namespace = "com.traxion.login"
 
     buildTypes {
         release {

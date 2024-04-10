@@ -15,5 +15,6 @@ android {
 
 dependencies {
     implementation(libs.androidx.google.fonts)
+    implementation(libs.androidx.material.icons.extended)
     implementation(libs.coil.compose)
 }
