@@ -1,6 +1,7 @@
 plugins {
     id("arch.android.application")
     id("arch.android.application.compose")
+    id("arch.android.hilt")
 }
 
 android {
@@ -34,5 +35,9 @@ android {
 }
 
 dependencies {
-    
+    implementation(project(":core:common"))
+    implementation(project(":core:design-system"))
+    implementation(project(":core:ui"))
+
+    implementation(project(":feature:home"))
 }

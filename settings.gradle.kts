@@ -22,3 +22,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Traxmisor"
 include(":app")
+include(":core:common")
+include(":core:design-system")
+include(":core:ui")
+include(":feature:home")

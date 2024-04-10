@@ -37,6 +37,22 @@ gradlePlugin {
             id = "arch.android.application.compose"
             implementationClass = "AndroidApplicationComposeArchPlugin"
         }
+        register("androidLibraryArch") {
+            id = "arch.android.library"
+            implementationClass = "AndroidLibraryArchPlugin"
+        }
+        register("androidLibraryComposeArch") {
+            id = "arch.android.library.compose"
+            implementationClass = "AndroidLibraryComposeArchPlugin"
+        }
+        register("androidHiltArch") {
+            id = "arch.android.hilt"
+            implementationClass = "AndroidHiltArchPlugin"
+        }
+        register("androidFeatureArch") {
+            id = "arch.android.feature"
+            implementationClass = "AndroidFeatureArchPlugin"
+        }
         register("jvmLibraryArch") {
             id = "arch.jvm.library"
             implementationClass = "JvmLibraryArchPlugin"
