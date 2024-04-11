@@ -5,7 +5,15 @@
 
     <!-- Messages -->
     <string name="message_location_permission">Esta aplicación monitorea la locación del usuario como parte de su funcionalidad, para continuar es necesario que aceptes los permisos requeridos</string>
-
+    <string name="message_sos_signals">Si presentas algún problema en tu ruta puedes mandar una señal SOS</string>
+    <string name="message_sos_signal_sent">Señal enviada correctamente, espera a ser contactado</string>
+    <string name="message_sos_signal_failed">No fue posible enviar la señal, intenta nuevamente</string>
+    
+    <!-- Signals -->
+    <string name="signal_vehicle_malfunction">Vehículo averiado</string>
+    <string name="signal_accident">Tuve un accidente</string>
+    <string name="signal_flat_tires">Se ponchó una llanta</string>
+    
     <!-- Hints -->
     <string name="hint_email">Correo electrónico</string>
     <string name="hint_password">Contraseña</string>

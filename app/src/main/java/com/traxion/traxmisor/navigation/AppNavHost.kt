@@ -16,10 +16,14 @@ import com.traxion.traxmisor.ui.AppState
 fun AppNavHost(
     appState: AppState,
     modifier: Modifier = Modifier,
-    startDestination: String = loginRoute
+    startDestination: String
 ) {
     val navController = appState.navController
 
+    /*
+    * Host for Android Compose Navigation library.
+    * Handles the function to perform navigation actions declared in feature modules.
+    * */
     NavHost(
         navController = navController,
         startDestination = startDestination,
@@ -30,6 +34,7 @@ fun AppNavHost(
                 navController.navigateToLogin(
                     navOptions = NavOptions.Builder()
                         .setPopUpTo(homeRoute, inclusive = true)
+                        .setLaunchSingleTop(true)
                         .build()
                 )
             }
@@ -39,6 +44,7 @@ fun AppNavHost(
                 navController.navigateToHome(
                     navOptions = NavOptions.Builder()
                         .setPopUpTo(loginRoute, inclusive = true)
+                        .setLaunchSingleTop(true)
                         .build()
                 )
             }

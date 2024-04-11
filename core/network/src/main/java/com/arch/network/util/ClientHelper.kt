@@ -9,6 +9,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
 
+/*
+* Client helper to create an OKHttpClient with some functionality based on the previous
+* configuration.
+* */
+
 private const val API_KEY = "api_key"
 
 fun clientFromConfig(context: Context, clientConfig: ClientConfig): OkHttpClient {

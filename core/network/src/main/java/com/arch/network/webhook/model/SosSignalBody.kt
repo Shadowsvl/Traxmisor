@@ -2,10 +2,8 @@ package com.arch.network.webhook.model
 
 import com.google.gson.annotations.SerializedName
 
-data class UserLocationBody(
+data class SosSignalBody(
     @SerializedName("uid") val userId: String,
-    @SerializedName("lat") val latitude: Double,
-    @SerializedName("lng") val longitude: Double,
-    @SerializedName("accuracy") val accuracy: Float,
+    @SerializedName("signalMessage") val signalMessage: String,
     @SerializedName("timestamp") val timestamp: Long
 )

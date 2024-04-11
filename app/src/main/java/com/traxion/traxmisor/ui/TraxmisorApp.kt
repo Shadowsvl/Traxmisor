@@ -16,16 +16,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.arch.data.repository.PreferenceRepository
 import com.arch.data.util.NetworkMonitor
 import com.arch.design_system.component.AppBackground
 import com.arch.ui.R
+import com.traxion.home.navigation.homeRoute
+import com.traxion.login.navigation.loginRoute
 import com.traxion.traxmisor.navigation.AppNavHost
 
 @Composable
 fun TraxmisorApp(
     networkMonitor: NetworkMonitor,
+    preferenceRepository: PreferenceRepository,
     appState: AppState = rememberAppState(
-        networkMonitor = networkMonitor
+        networkMonitor = networkMonitor,
+        preferenceRepository = preferenceRepository
     )
 ) {
     AppBackground {
@@ -33,6 +38,8 @@ fun TraxmisorApp(
 
         val isOffline by appState.isOffline.collectAsStateWithLifecycle()
         val notConnectedMessage = stringResource(id = R.string.notify_not_connected)
+
+        val isLogged by appState.isLogged.collectAsStateWithLifecycle()
 
         LaunchedEffect(isOffline) {
             if (isOffline) {
@@ -59,7 +66,8 @@ fun TraxmisorApp(
         ) { padding ->
             AppNavHost(
                 appState = appState,
-                modifier = Modifier.padding(padding)
+                modifier = Modifier.padding(padding),
+                startDestination = if (isLogged) homeRoute else loginRoute
             )
         }
     }

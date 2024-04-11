@@ -40,7 +40,12 @@ class FusedLocationMonitor @Inject constructor(
 
                 result.locations.lastOrNull()?.let {location: Location ->
                     launch {
-                        val sample = LocationSample(latitude = location.latitude, longitude = location.longitude, accuracy = location.accuracy)
+                        val sample = LocationSample(
+                            latitude = location.latitude,
+                            longitude = location.longitude,
+                            accuracy = location.accuracy,
+                            timestamp = System.currentTimeMillis()
+                        )
                         Log.d(TAG, "lat: ${sample.latitude}, lng: ${sample.longitude}")
                         channel.trySend(sample)
                     }

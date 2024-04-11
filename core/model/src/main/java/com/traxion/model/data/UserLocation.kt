@@ -5,5 +5,5 @@ data class UserLocation(
     val latitude: Double,
     val longitude: Double,
     val accuracy: Float,
-    val timestamp: Double
+    val timestamp: Long
 )

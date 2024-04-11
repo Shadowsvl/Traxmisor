@@ -2,6 +2,9 @@ package com.arch.network.util
 
 import java.util.concurrent.TimeUnit
 
+/*
+* Builder class to help with the client configuration
+* */
 class ClientConfig private constructor(
     val baseUrl: String,
     val readTimeout: Timeout,

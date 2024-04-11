@@ -9,6 +9,10 @@ sealed interface ApiResponse<out T> {
     data class Failure(val exception: Throwable) : ApiResponse<Nothing>
 }
 
+/*
+* Extension function to map a Retrofit2 response as an ApiResponse to have more control and
+* information of exceptions, errors and the http codes if required.
+* */
 fun <T> Response<T>.asApiResponse(
     dtoClass: Class<*>? = null,
     gson: Gson? = null
