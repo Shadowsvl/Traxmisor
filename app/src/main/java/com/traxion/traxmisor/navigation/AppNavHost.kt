@@ -20,6 +20,10 @@ fun AppNavHost(
 ) {
     val navController = appState.navController
 
+    /*
+    * Host for Android Compose Navigation library.
+    * Handles the function to perform navigation actions declared in feature modules.
+    * */
     NavHost(
         navController = navController,
         startDestination = startDestination,

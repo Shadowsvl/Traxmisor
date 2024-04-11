@@ -13,6 +13,9 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/*
+* Class to handle the app preferences via DataStore library
+* */
 @Singleton
 class AppDataStore @Inject constructor(
     @ApplicationContext private val context: Context

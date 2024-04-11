@@ -30,7 +30,6 @@ class WebhookNetwork @Inject constructor(
 ) : WebhookNetworkDataSource {
 
     private val clientConfig = ClientConfig.Builder(baseUrl = BuildConfig.API_BASE_URL)
-        .cacheEnabled(true)
         .build()
 
     private val client = RetrofitApiFactory(gson).createClient(context, clientConfig)
@@ -51,6 +50,10 @@ class WebhookNetwork @Inject constructor(
         ).toResult { it.string() }
     }
 
+    /*
+    * Extension function to map the API response to a Result and letting the caller handle the
+    * mapping of data.
+    * */
     private suspend fun <T, R> Response<T>.toResult(dataProcess: (T) -> R): Result<R> = withContext(ioDispatcher) {
         when(val response = asApiResponse()) {
             is ApiResponse.Success -> response.data?.let { Result.Success(dataProcess(it)) }

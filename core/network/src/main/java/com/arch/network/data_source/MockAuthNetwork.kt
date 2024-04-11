@@ -7,6 +7,9 @@ import kotlinx.coroutines.delay
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/*
+* Mock implementation of the auth functions
+* */
 @Singleton
 class MockAuthNetwork @Inject constructor() : AuthNetworkDataSource {
 

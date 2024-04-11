@@ -13,6 +13,10 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
+/*
+* Classes to handle the instance of the AppState, which is responsible to keep major UI states or
+* flows that affect the hole application.
+* */
 @Composable
 fun rememberAppState(
     networkMonitor: NetworkMonitor,
@@ -43,6 +47,9 @@ class AppState(
     val coroutineScope: CoroutineScope
 ) {
 
+    /*
+    * State flow to check the app internet connection.
+    * */
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
         .stateIn(
@@ -51,6 +58,9 @@ class AppState(
             initialValue = false
         )
 
+    /*
+    * State flow to check whether the user is already logged.
+    * */
     val isLogged = preferenceRepository.isLogged()
         .stateIn(
             scope = coroutineScope,
