@@ -6,7 +6,11 @@
 
     <!-- Buttons -->
     <string name="btn_log_in">Log in</string>
+    <string name="btn_accept">Accept</string>
 
     <!-- Notify Errors -->
     <string name="notify_not_connected">⚠️ You aren’t connected to the internet</string>
+    <string name="notify_email_not_valid">Email not valid</string>
+    <string name="notify_password_size_not_valid">Must have at least 6 characters</string>
+    <string name="notify_log_in_error">User o password not valid, retry</string>
 </resources>

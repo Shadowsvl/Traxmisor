@@ -14,9 +14,11 @@ class AndroidFeatureArchPlugin : Plugin<Project> {
             }
 
             dependencies {
+                implementation(project(":core:model"))
                 implementation(project(":core:common"))
                 implementation(project(":core:design-system"))
                 implementation(project(":core:ui"))
+                implementation(project(":core:data"))
             }
         }
     }

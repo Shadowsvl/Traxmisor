@@ -6,7 +6,7 @@ sealed interface LoginUiState {
 
     data object Loading : LoginUiState
 
-    data class AuthError(val message: String) : LoginUiState
+    data object AuthError : LoginUiState
 
     data object Logged : LoginUiState
 }

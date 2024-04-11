@@ -1,5 +1,7 @@
 package com.arch.ui.component
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -25,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.arch.design_system.annotations.ThemePreviews
 import com.arch.design_system.icon.AppIcons
 import com.arch.design_system.theme.AppTheme
+import com.arch.design_system.theme.extraSmallPadding
 import com.arch.ui.R
 
 @Composable
@@ -35,51 +39,58 @@ fun EmailInput(
     isError: Boolean = false,
     errorMessage: String = ""
 ) {
-    OutlinedTextField(
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = MaterialTheme.colorScheme.onBackground,
-            unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
-        ),
-        label = {
-            Text(
-                text = stringResource(id = R.string.hint_email),
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-            )
-        },
-        trailingIcon = {
-            if (email.isNotEmpty()) {
-                IconButton(
-                    onClick = {
-                        onEmailChanged("")
-                    },
-                ) {
-                    Icon(
-                        imageVector = AppIcons.Close,
-                        contentDescription = "Close",
-                        tint = MaterialTheme.colorScheme.onSurface
-                    )
+    Column(
+        verticalArrangement = Arrangement.spacedBy(extraSmallPadding),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
+        OutlinedTextField(
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
+            ),
+            label = {
+                Text(
+                    text = stringResource(id = R.string.hint_email),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
+                )
+            },
+            trailingIcon = {
+                if (email.isNotEmpty()) {
+                    IconButton(
+                        onClick = {
+                            onEmailChanged("")
+                        },
+                    ) {
+                        Icon(
+                            imageVector = AppIcons.Close,
+                            contentDescription = "Close",
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                 }
-            }
-        },
-        onValueChange = {
-            onEmailChanged(it)
-        },
-        value = email,
-        isError = isError,
-        modifier = modifier,
-        shape = RoundedCornerShape(32.dp),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Email,
-            autoCorrect = true,
-            imeAction = ImeAction.Next
-        ),
-        singleLine = true
-    )
-    if (isError) {
-        Text(
-            text = errorMessage,
-            color = MaterialTheme.colorScheme.error
+            },
+            onValueChange = {
+                onEmailChanged(it)
+            },
+            value = email,
+            isError = isError,
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(32.dp),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Email,
+                autoCorrect = true,
+                imeAction = ImeAction.Next
+            ),
+            singleLine = true
         )
+        if (isError) {
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
     }
 }
 
@@ -93,50 +104,57 @@ fun PasswordInput(
 ) {
     var isVisible by remember { mutableStateOf(false) }
 
-    OutlinedTextField(
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = MaterialTheme.colorScheme.onBackground,
-            unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
-        ),
-        label = {
-            Text(
-                text = stringResource(id = R.string.hint_password),
-                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
-            )
-        },
-        visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
-        trailingIcon = {
-            IconButton(
-                onClick = {
-                    isVisible = !isVisible
-                },
-            ) {
-                Icon(
-                    imageVector = if (isVisible) AppIcons.Visibility else AppIcons.VisibilityOff,
-                    contentDescription = "Visibility",
-                    tint = MaterialTheme.colorScheme.onSurface
+    Column(
+        verticalArrangement = Arrangement.spacedBy(extraSmallPadding),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
+        OutlinedTextField(
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedBorderColor = MaterialTheme.colorScheme.onBackground
+            ),
+            label = {
+                Text(
+                    text = stringResource(id = R.string.hint_password),
+                    color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f)
                 )
-            }
-        },
-        onValueChange = {
-            onPasswordChanged(it)
-        },
-        value = password,
-        isError = isError,
-        modifier = modifier,
-        shape = RoundedCornerShape(32.dp),
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Password,
-            autoCorrect = true,
-            imeAction = ImeAction.Done
-        ),
-        singleLine = true
-    )
-    if (isError) {
-        Text(
-            text = errorMessage,
-            color = MaterialTheme.colorScheme.error
+            },
+            visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
+            trailingIcon = {
+                IconButton(
+                    onClick = {
+                        isVisible = !isVisible
+                    },
+                ) {
+                    Icon(
+                        imageVector = if (isVisible) AppIcons.Visibility else AppIcons.VisibilityOff,
+                        contentDescription = "Visibility",
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            },
+            onValueChange = {
+                onPasswordChanged(it)
+            },
+            value = password,
+            isError = isError,
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(32.dp),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Password,
+                autoCorrect = true,
+                imeAction = ImeAction.Done
+            ),
+            singleLine = true
         )
+        if (isError) {
+            Text(
+                text = errorMessage,
+                color = MaterialTheme.colorScheme.error,
+                style = MaterialTheme.typography.labelMedium
+            )
+        }
     }
 }
 

@@ -9,7 +9,11 @@
 
     <!-- Buttons -->
     <string name="btn_log_in">Iniciar sesión</string>
+    <string name="btn_accept">Aceptar</string>
 
     <!-- Notify Errors -->
     <string name="notify_not_connected">⚠️ Sin conexión a internet</string>
+    <string name="notify_email_not_valid">Correo no válido</string>
+    <string name="notify_password_size_not_valid">Debe tener al menos 6 caracteres</string>
+    <string name="notify_log_in_error">Usuario o contraseña no válido, vuelva a intentar</string>
 </resources>
