@@ -2,6 +2,7 @@ package com.traxion.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.arch.common.result.Result
 import com.arch.common.result.getDataOrNull
 import com.arch.data.location.LocationMonitor
 import com.arch.data.repository.PreferenceRepository
@@ -32,6 +33,14 @@ class HomeViewModel @Inject constructor(
         initialValue = _uiState.value
     )
 
+    private var _signalState: MutableStateFlow<SignalUiState> = MutableStateFlow(SignalUiState.WaitingSignal)
+
+    val signalState = _signalState.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5_000),
+        initialValue = _signalState.value
+    )
+
     private lateinit var userId: String
 
     init {
@@ -51,6 +60,18 @@ class HomeViewModel @Inject constructor(
             userId = user.id
             _uiState.update { HomeUiState.Success(user) }
         }
+    }
+
+    fun sendSignal(signalMessage: String) = viewModelScope.launch {
+        _signalState.update { SignalUiState.SendingSignal }
+        when(userRepository.sendSosSignal(userId = userId, signalMessage = signalMessage)) {
+            is Result.Error -> _signalState.update { SignalUiState.SignalFailed }
+            is Result.Success -> _signalState.update { SignalUiState.SignalSent }
+        }
+    }
+
+    fun acceptSignalResult() {
+        _signalState.update { SignalUiState.WaitingSignal }
     }
 
     fun logOut() = viewModelScope.launch {

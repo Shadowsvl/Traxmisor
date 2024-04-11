@@ -11,6 +11,7 @@ import com.arch.network.asApiResponse
 import com.arch.network.util.ClientConfig
 import com.arch.network.webhook.WebhookApi
 import com.arch.network.webhook.mapper.asUserLocationBody
+import com.arch.network.webhook.model.SosSignalBody
 import com.google.gson.Gson
 import com.traxion.model.data.UserLocation
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -38,6 +39,16 @@ class WebhookNetwork @Inject constructor(
 
     override suspend fun sendUserLocation(userLocation: UserLocation): Result<Any> {
         return api.postUserLocation(userLocation.asUserLocationBody()).toResult { it.string() }
+    }
+
+    override suspend fun sendSosSignal(userId: String, signalMessage: String): Result<Any> {
+        return api.postSosSignal(
+            SosSignalBody(
+                userId = userId,
+                signalMessage = signalMessage,
+                timestamp = System.currentTimeMillis()
+            )
+        ).toResult { it.string() }
     }
 
     private suspend fun <T, R> Response<T>.toResult(dataProcess: (T) -> R): Result<R> = withContext(ioDispatcher) {

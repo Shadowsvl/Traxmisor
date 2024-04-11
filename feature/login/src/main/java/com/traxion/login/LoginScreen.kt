@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -23,7 +22,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -34,6 +33,7 @@ import com.arch.design_system.theme.basePadding
 import com.arch.design_system.theme.largePadding
 import com.arch.ui.R
 import com.arch.ui.component.EmailInput
+import com.arch.ui.component.NotifyCard
 import com.arch.ui.component.PasswordInput
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -105,32 +105,17 @@ internal fun LoginScreen(
         )
         Text(
             text = stringResource(id = R.string.app_name).uppercase(),
-            style = MaterialTheme.typography.titleLarge
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold
         )
         if (permissions.allPermissionsGranted) {
             when(uiState) {
                 is LoginUiState.AuthError -> {
-                    Card {
-                        Column(
-                            verticalArrangement = Arrangement.spacedBy(basePadding, Alignment.CenterVertically),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(basePadding)
-                        ) {
-                            Text(
-                                text = stringResource(id = R.string.notify_log_in_error),
-                                style = MaterialTheme.typography.bodyLarge,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                            Button(
-                                onClick = onContinueLogInClick
-                            ) {
-                                Text(text = stringResource(id = R.string.btn_accept))
-                            }
-                        }
-                    }
+                    NotifyCard(
+                        message = stringResource(id = R.string.notify_log_in_error),
+                        actionText = stringResource(id = R.string.btn_accept),
+                        onActionClick = onContinueLogInClick
+                    )
                 }
                 LoginUiState.Loading -> {
                     CircularProgressIndicator()
@@ -165,32 +150,10 @@ internal fun LoginScreen(
                 }
             }
         } else {
-            Card {
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(basePadding, Alignment.CenterVertically),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(basePadding)
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.message_location_permission),
-                        style = MaterialTheme.typography.bodyLarge,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Button(
-                        onClick = {
-                            permissions.launchMultiplePermissionRequest()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = basePadding)
-                    ) {
-                        Text(text = stringResource(id = R.string.btn_continue))
-                    }
-                }
-            }
+            NotifyCard(
+                message = stringResource(id = R.string.message_location_permission),
+                onActionClick = { permissions.launchMultiplePermissionRequest() }
+            )
         }
     }
 }

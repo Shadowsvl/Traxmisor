@@ -14,5 +14,9 @@ class DefaultUserRepository @Inject constructor(
 
     override suspend fun getUser(userId: String): Result<User> = authNetworkDataSource.getUser(userId)
 
-    override suspend fun sendUserLocation(userLocation: UserLocation): Result<Any> = webhookNetworkDataSource.sendUserLocation(userLocation)
+    override suspend fun sendUserLocation(userLocation: UserLocation): Result<Any> =
+        webhookNetworkDataSource.sendUserLocation(userLocation)
+
+    override suspend fun sendSosSignal(userId: String, signalMessage: String): Result<Any> =
+        webhookNetworkDataSource.sendSosSignal(userId, signalMessage)
 }

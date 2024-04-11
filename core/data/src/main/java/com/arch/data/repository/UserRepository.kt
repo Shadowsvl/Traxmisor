@@ -9,4 +9,6 @@ interface UserRepository {
     suspend fun getUser(userId: String): Result<User>
 
     suspend fun sendUserLocation(userLocation: UserLocation): Result<Any>
+
+    suspend fun sendSosSignal(userId: String, signalMessage: String): Result<Any>
 }

@@ -2,6 +2,14 @@
 <resources>
     <!-- Messages -->
     <string name="message_location_permission">This application monitors the user location as part of its functionality, to continue you must accept the required permissions</string>
+    <string name="message_sos_signals">If you have a problem on your route you can send an SOS signal</string>
+    <string name="message_sos_signal_sent">Signal sent successfully, wait to be contacted</string>
+    <string name="message_sos_signal_failed">Could not send signal, try again</string>
+
+    <!-- Signals -->
+    <string name="signal_vehicle_malfunction">Damaged vehicle</string>
+    <string name="signal_accident">I had an accident</string>
+    <string name="signal_flat_tires">A tire got flat</string>
 
     <!-- Hints -->
     <string name="hint_email">Email</string>
