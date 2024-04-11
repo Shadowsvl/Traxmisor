@@ -7,5 +7,5 @@ data class UserLocationBody(
     @SerializedName("lat") val latitude: Double,
     @SerializedName("lng") val longitude: Double,
     @SerializedName("accuracy") val accuracy: Float,
-    @SerializedName("timestamp") val timestamp: Double
+    @SerializedName("timestamp") val timestamp: Long
 )

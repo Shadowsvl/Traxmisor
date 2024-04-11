@@ -65,10 +65,11 @@ class LoginViewModel @Inject constructor(
         if (isEmailValid && isPasswordValid) {
             _uiState.update { LoginUiState.Loading }
             viewModelScope.launch {
-                when(logInUseCase(_email.value, _password.value)) {
+                when(val logInResult = logInUseCase(_email.value, _password.value)) {
                     is Result.Error -> _uiState.update { LoginUiState.AuthError }
                     is Result.Success -> {
-                        preferenceRepository.setIsLogged(true)
+                        preferenceRepository.setIsLogged(logInResult.data.isLogged)
+                        preferenceRepository.setUserId(logInResult.data.userId)
                         _uiState.update { LoginUiState.Logged }
                     }
                 }

@@ -11,4 +11,8 @@ class DataStoreRepository @Inject constructor(
     override fun isLogged(): Flow<Boolean> = appDataStore.isLogged
 
     override suspend fun setIsLogged(value: Boolean) = appDataStore.setIsLogged(value)
+
+    override fun userId(): Flow<String> = appDataStore.userId
+
+    override suspend fun setUserId(value: String) = appDataStore.setUserId(value)
 }

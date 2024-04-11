@@ -8,7 +8,7 @@ import retrofit2.http.POST
 
 interface WebhookApi {
 
-    @POST("e510bf9b39d491442ffe8993446bab95")
+    @POST("634d56766487f88222e719f79a9e43bc")
     suspend fun postUserLocation(
         @Body body: UserLocationBody
     ): Response<ResponseBody>
