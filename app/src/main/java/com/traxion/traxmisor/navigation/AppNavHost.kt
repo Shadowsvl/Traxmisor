@@ -16,7 +16,7 @@ import com.traxion.traxmisor.ui.AppState
 fun AppNavHost(
     appState: AppState,
     modifier: Modifier = Modifier,
-    startDestination: String = loginRoute
+    startDestination: String
 ) {
     val navController = appState.navController
 
@@ -30,6 +30,7 @@ fun AppNavHost(
                 navController.navigateToLogin(
                     navOptions = NavOptions.Builder()
                         .setPopUpTo(homeRoute, inclusive = true)
+                        .setLaunchSingleTop(true)
                         .build()
                 )
             }
@@ -39,6 +40,7 @@ fun AppNavHost(
                 navController.navigateToHome(
                     navOptions = NavOptions.Builder()
                         .setPopUpTo(loginRoute, inclusive = true)
+                        .setLaunchSingleTop(true)
                         .build()
                 )
             }

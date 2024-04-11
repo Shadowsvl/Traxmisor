@@ -7,6 +7,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import com.arch.data.repository.PreferenceRepository
 import com.arch.data.util.NetworkMonitor
 import com.arch.design_system.theme.AppTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
@@ -19,6 +20,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var networkMonitor: NetworkMonitor
+
+    @Inject
+    lateinit var preferenceRepository: PreferenceRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -36,7 +40,8 @@ class MainActivity : ComponentActivity() {
 
             AppTheme {
                 TraxmisorApp(
-                    networkMonitor = networkMonitor
+                    networkMonitor = networkMonitor,
+                    preferenceRepository = preferenceRepository
                 )
             }
         }

@@ -43,21 +43,17 @@ class LoginViewModel @Inject constructor(
     private var _passwordError = MutableStateFlow(false)
     val passwordError = _passwordError.asStateFlow()
 
-    init {
-        viewModelScope.launch {
-            preferenceRepository.isLogged().collectLatest { isLogged ->
-                if (isLogged) {
-                    _uiState.update { LoginUiState.Logged }
-                } else {
-                    _uiState.update { LoginUiState.LogIn }
-                }
-            }
-        }
-    }
-
     fun onEmailChanged(value: String) = _email.update { value }
 
     fun onPasswordChanged(value: String) = _password.update { value }
+
+    init {
+        viewModelScope.launch {
+            preferenceRepository.isLogged().collectLatest {  isLogged ->
+                if (!isLogged) _uiState.update { LoginUiState.LogIn }
+            }
+        }
+    }
 
     fun logIn() {
         val isEmailValid = emailValidationUseCase(_email.value)
@@ -71,7 +67,10 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch {
                 when(logInUseCase(_email.value, _password.value)) {
                     is Result.Error -> _uiState.update { LoginUiState.AuthError }
-                    is Result.Success -> preferenceRepository.setIsLogged(true)
+                    is Result.Success -> {
+                        preferenceRepository.setIsLogged(true)
+                        _uiState.update { LoginUiState.Logged }
+                    }
                 }
             }
         }
