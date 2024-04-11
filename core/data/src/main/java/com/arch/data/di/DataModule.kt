@@ -1,5 +1,9 @@
 package com.arch.data.di
 
+import com.arch.data.location.FusedLocationMonitor
+import com.arch.data.location.LocationMonitor
+import com.arch.data.repository.DataStoreRepository
+import com.arch.data.repository.PreferenceRepository
 import com.arch.data.util.ConnectivityManagerNetworkMonitor
 import com.arch.data.util.NetworkMonitor
 import dagger.Binds
@@ -15,4 +19,14 @@ interface DataModule {
     fun bindsNetworkMonitor(
         networkMonitor: ConnectivityManagerNetworkMonitor
     ): NetworkMonitor
+
+    @Binds
+    fun bindsLocationMonitor(
+        fusedLocationMonitor: FusedLocationMonitor
+    ): LocationMonitor
+
+    @Binds
+    fun bindsPreferenceRepository(
+        dataStoreRepository: DataStoreRepository
+    ): PreferenceRepository
 }

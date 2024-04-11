@@ -9,6 +9,7 @@ import com.traxion.home.navigation.homeScreen
 import com.traxion.home.navigation.navigateToHome
 import com.traxion.login.navigation.loginRoute
 import com.traxion.login.navigation.loginScreen
+import com.traxion.login.navigation.navigateToLogin
 import com.traxion.traxmisor.ui.AppState
 
 @Composable
@@ -24,7 +25,15 @@ fun AppNavHost(
         startDestination = startDestination,
         modifier = modifier
     ) {
-        homeScreen()
+        homeScreen(
+            onNavigateToLogin = {
+                navController.navigateToLogin(
+                    navOptions = NavOptions.Builder()
+                        .setPopUpTo(homeRoute, inclusive = true)
+                        .build()
+                )
+            }
+        )
         loginScreen(
             onNavigateToHome = {
                 navController.navigateToHome(

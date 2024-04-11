@@ -3,6 +3,9 @@
     <!-- Labels -->
     <string name="app_name" translatable="false">Traxmisor</string>
 
+    <!-- Messages -->
+    <string name="message_location_permission">Esta aplicación monitorea la locación del usuario como parte de su funcionalidad, para continuar es necesario que aceptes los permisos requeridos</string>
+
     <!-- Hints -->
     <string name="hint_email">Correo electrónico</string>
     <string name="hint_password">Contraseña</string>
@@ -10,6 +13,8 @@
     <!-- Buttons -->
     <string name="btn_log_in">Iniciar sesión</string>
     <string name="btn_accept">Aceptar</string>
+    <string name="btn_log_out">Cerrar sesión</string>
+    <string name="btn_continue">Continuar</string>
 
     <!-- Notify Errors -->
     <string name="notify_not_connected">⚠️ Sin conexión a internet</string>

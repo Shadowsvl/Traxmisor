@@ -1,18 +1,15 @@
 package com.traxion.login
 
+import android.Manifest
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -39,6 +36,8 @@ import com.arch.design_system.theme.largePadding
 import com.arch.ui.R
 import com.arch.ui.component.EmailInput
 import com.arch.ui.component.PasswordInput
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.rememberMultiplePermissionsState
 
 @Composable
 internal fun LoginRoute(
@@ -69,6 +68,7 @@ internal fun LoginRoute(
     )
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 internal fun LoginScreen(
     uiState: LoginUiState,
@@ -83,12 +83,18 @@ internal fun LoginScreen(
     onLogInSuccess: () -> Unit
 ) {
 
+    val permissions = rememberMultiplePermissionsState(
+        permissions = listOf(
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        )
+    )
+
     Column(
         verticalArrangement = Arrangement.spacedBy(largePadding, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
-            .imePadding()
             .padding(basePadding)
             .animateContentSize()
     ) {
@@ -102,63 +108,89 @@ internal fun LoginScreen(
             text = stringResource(id = R.string.app_name).uppercase(),
             style = MaterialTheme.typography.titleLarge
         )
-        when(uiState) {
-            is LoginUiState.AuthError -> {
-                Card {
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(basePadding, Alignment.CenterVertically),
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(basePadding)
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.notify_log_in_error),
-                            style = MaterialTheme.typography.bodyLarge,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                        Button(
-                            onClick = onContinueLogInClick,
+        if (permissions.allPermissionsGranted) {
+            when(uiState) {
+                is LoginUiState.AuthError -> {
+                    Card {
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(basePadding, Alignment.CenterVertically),
+                            horizontalAlignment = Alignment.CenterHorizontally,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = basePadding)
+                                .padding(basePadding)
                         ) {
-                            Text(text = stringResource(id = R.string.btn_log_in))
+                            Text(
+                                text = stringResource(id = R.string.notify_log_in_error),
+                                style = MaterialTheme.typography.bodyLarge,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            Button(
+                                onClick = onContinueLogInClick
+                            ) {
+                                Text(text = stringResource(id = R.string.btn_accept))
+                            }
                         }
                     }
                 }
-            }
-            LoginUiState.Loading -> {
-                CircularProgressIndicator()
-            }
-            LoginUiState.LogIn -> {
-                EmailInput(
-                    email = email,
-                    onEmailChanged = onEmailChanged,
-                    isError = emailError,
-                    errorMessage = stringResource(id = R.string.notify_email_not_valid),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                PasswordInput(
-                    password = password,
-                    onPasswordChanged = onPasswordChanged,
-                    isError = passwordError,
-                    errorMessage = stringResource(id = R.string.notify_password_size_not_valid),
-                    modifier = Modifier.fillMaxWidth()
-                )
-                Button(
-                    onClick = onLogInClick,
-                    enabled = email.isNotBlank() && password.isNotBlank(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = basePadding)
-                ) {
-                    Text(text = stringResource(id = R.string.btn_log_in))
+                LoginUiState.Loading -> {
+                    CircularProgressIndicator()
+                }
+                LoginUiState.LogIn -> {
+                    EmailInput(
+                        email = email,
+                        onEmailChanged = onEmailChanged,
+                        isError = emailError,
+                        errorMessage = stringResource(id = R.string.notify_email_not_valid),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    PasswordInput(
+                        password = password,
+                        onPasswordChanged = onPasswordChanged,
+                        isError = passwordError,
+                        errorMessage = stringResource(id = R.string.notify_password_size_not_valid),
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Button(
+                        onClick = onLogInClick,
+                        enabled = email.isNotBlank() && password.isNotBlank(),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = basePadding)
+                    ) {
+                        Text(text = stringResource(id = R.string.btn_log_in))
+                    }
+                }
+                LoginUiState.Logged -> {
+                    onLogInSuccess()
                 }
             }
-            LoginUiState.Logged -> {
-                onLogInSuccess()
+        } else {
+            Card {
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(basePadding, Alignment.CenterVertically),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(basePadding)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.message_location_permission),
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                    Button(
+                        onClick = {
+                            permissions.launchMultiplePermissionRequest()
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = basePadding)
+                    ) {
+                        Text(text = stringResource(id = R.string.btn_continue))
+                    }
+                }
             }
         }
     }
